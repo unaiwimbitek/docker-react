@@ -1,0 +1,21 @@
+version: '3'
+services:
+    web:
+        build: #Si el archivo se llamade Dockerfile, con poner un punto aqui vale.
+            context: . #El directorio donde se encuentra el archivo.
+            dockerfile: Dockerfile.dev
+        ports: 
+            - "3000:3000" #3000 para fuera del contenedor y 3000 para dentro del contenedor
+        volumes:
+            - /app/node_modules
+            - .:/app #Para REFERENCIAR todos los archivos de la carpeta actual (.) dentro de la carpeta app (/app) como referencias.
+
+    tests:
+            build:
+                context: .
+                dockerfile: Dockerfile.dev
+            volumes:
+                - /app/node_modules
+                - .:/app
+            command: ["npm", "run", "test"]
+            
